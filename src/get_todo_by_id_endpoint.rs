@@ -14,7 +14,7 @@ struct GetTodoByIdResponse {
     id: Uuid,
     text: String,
     created_at: DateTime<Utc>,
-    links: Vec<String>,
+    user: String,
 }
 
 impl GetTodoByIdResponse {
@@ -23,7 +23,7 @@ impl GetTodoByIdResponse {
             id: *output.id(),
             text: output.text().clone(),
             created_at: *output.created_at(),
-            links: vec!["das".to_string()],
+            user: format!("127.0.0.1:8080/users/{}", output.user_id()),
         }
     }
 }

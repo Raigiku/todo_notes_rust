@@ -1,4 +1,4 @@
-use crate::TodoNotesError;
+use crate::{TodoNotesError, User};
 use chrono::{DateTime, Utc};
 use uuid::Uuid;
 
@@ -6,15 +6,22 @@ pub struct Todo {
     id: Uuid,
     text: String,
     created_at: DateTime<Utc>,
+    user_id: Uuid,
 }
 
 impl Todo {
-    pub fn new(id: Uuid, text: String, created_at: DateTime<Utc>) -> Result<Self, TodoNotesError> {
+    pub fn new(
+        id: Uuid,
+        text: String,
+        created_at: DateTime<Utc>,
+        user_id: Uuid,
+    ) -> Result<Self, TodoNotesError> {
         let text = Self::validate_text(text)?;
         Ok(Self {
             id,
             text,
             created_at,
+            user_id,
         })
     }
 
@@ -39,5 +46,9 @@ impl Todo {
 
     pub fn created_at(&self) -> &DateTime<Utc> {
         &self.created_at
+    }
+
+    pub fn user_id(&self) -> &Uuid {
+        &self.user_id
     }
 }

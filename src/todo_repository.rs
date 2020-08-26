@@ -10,8 +10,8 @@ pub async fn get_todo_by_id(id: Uuid) -> Result<Option<Todo>, TodoNotesError> {
         .danger_accept_invalid_certs(true)
         .build()?;
     let connector = MakeTlsConnector::new(connector);
-    let (client, connection) =
-        tokio_postgres::connect(&env::var("POSTGRES_HEROKU_URI")?, connector).await?;
+    let connection_string = &env::var("POSTGRES_HEROKU_URI")?;
+    let (client, connection) = tokio_postgres::connect(connection_string, connector).await?;
 
     actix_rt::spawn(async move {
         if let Err(e) = connection.await {
@@ -25,9 +25,10 @@ pub async fn get_todo_by_id(id: Uuid) -> Result<Option<Todo>, TodoNotesError> {
     let some_value = rows.first();
     some_value
         .map(|value| {
-            let text: String = value.try_get("text")?;
-            let created_at: DateTime<Utc> = value.try_get("created_at")?;
-            Todo::new(id, text, created_at)
+            let text: String = value.try_get(1)?;
+            let created_at: DateTime<Utc> = value.try_get(2)?;
+            let user_id: Uuid = value.try_get(3)?;
+            Todo::new(id, text, created_at, user_id)
         })
         .transpose()
 }

@@ -20,6 +20,7 @@ pub struct GetTodoByIdOutput {
     id: Uuid,
     text: String,
     created_at: DateTime<Utc>,
+    user_id: Uuid
 }
 
 impl GetTodoByIdOutput {
@@ -28,6 +29,7 @@ impl GetTodoByIdOutput {
             id: *todo.id(),
             text: todo.text().clone(),
             created_at: *todo.created_at(),
+            user_id: *todo.user_id()
         }
     }
 
@@ -41,6 +43,10 @@ impl GetTodoByIdOutput {
 
     pub fn created_at(&self) -> &DateTime<Utc> {
         &self.created_at
+    }
+
+    pub fn user_id(&self) -> &Uuid {
+        &self.user_id
     }
 }
 
