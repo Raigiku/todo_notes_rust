@@ -1,4 +1,4 @@
-use crate::{TodoNotesError, User};
+use crate::TodoNotesError;
 use chrono::{DateTime, Utc};
 use uuid::Uuid;
 
