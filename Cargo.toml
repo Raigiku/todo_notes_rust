@@ -16,3 +16,4 @@ uuid = { version = "0.8.1", features = ["serde", "v4"] }
 tokio-postgres = { version = "0.5.5", features = ["with-chrono-0_4", "with-uuid-0_8"] }
 native-tls = "0.2.4"
 postgres-native-tls = "0.3.0"
+deadpool-postgres = "0.5.6"

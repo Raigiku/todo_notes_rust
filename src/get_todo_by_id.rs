@@ -20,7 +20,7 @@ pub struct GetTodoByIdOutput {
     id: Uuid,
     text: String,
     created_at: DateTime<Utc>,
-    user_id: Uuid
+    user_id: Uuid,
 }
 
 impl GetTodoByIdOutput {
@@ -29,7 +29,7 @@ impl GetTodoByIdOutput {
             id: *todo.id(),
             text: todo.text().clone(),
             created_at: *todo.created_at(),
-            user_id: *todo.user_id()
+            user_id: *todo.user_id(),
         }
     }
 
@@ -51,8 +51,9 @@ impl GetTodoByIdOutput {
 }
 
 pub async fn get_todo_by_id(
+    db_client: &deadpool_postgres::Client,
     input: GetTodoByIdInput,
 ) -> Result<Option<GetTodoByIdOutput>, TodoNotesError> {
-    let some_todo = todo_repository::get_todo_by_id(input.id).await?;
+    let some_todo = todo_repository::get_todo_by_id(db_client, input.id).await?;
     Ok(some_todo.map(GetTodoByIdOutput::new))
 }

@@ -4,7 +4,7 @@ use actix_web::{
     HttpResponse,
 };
 use serde::Serialize;
-use std::{env, error::Error, fmt};
+use std::{env, error::Error, fmt, io};
 
 #[derive(Debug, Serialize)]
 pub enum TodoNotesError {
@@ -57,6 +57,36 @@ impl From<native_tls::Error> for TodoNotesError {
 
 impl From<env::VarError> for TodoNotesError {
     fn from(e: env::VarError) -> Self {
+        TodoNotesError::UserError {
+            field: "".to_string(),
+            message: e.to_string(),
+        }
+        // TodoNotesError::InternalError
+    }
+}
+
+impl From<deadpool_postgres::PoolError> for TodoNotesError {
+    fn from(e: deadpool_postgres::PoolError) -> Self {
+        TodoNotesError::UserError {
+            field: "".to_string(),
+            message: e.to_string(),
+        }
+        // TodoNotesError::InternalError
+    }
+}
+
+impl From<io::Error> for TodoNotesError {
+    fn from(e: io::Error) -> Self {
+        TodoNotesError::UserError {
+            field: "".to_string(),
+            message: e.to_string(),
+        }
+        // TodoNotesError::InternalError
+    }
+}
+
+impl From<deadpool_postgres::config::ConfigError> for TodoNotesError {
+    fn from(e: deadpool_postgres::config::ConfigError) -> Self {
         TodoNotesError::UserError {
             field: "".to_string(),
             message: e.to_string(),
