@@ -1,7 +1,8 @@
-use crate::TodoNotesError;
+use crate::common::TodoNotesError;
 use chrono::{DateTime, Utc};
 use uuid::Uuid;
 
+#[derive(Debug)]
 pub struct Todo {
     id: Uuid,
     text: String,
