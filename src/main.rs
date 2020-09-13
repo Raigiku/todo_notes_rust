@@ -5,8 +5,8 @@ use sqlx::PgPool;
 use std::{env, sync::Arc};
 
 mod commands;
-mod entities;
 mod infrastructure;
+mod models;
 mod queries;
 
 #[actix_rt::main]

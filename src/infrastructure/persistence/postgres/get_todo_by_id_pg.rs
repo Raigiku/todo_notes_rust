@@ -1,6 +1,6 @@
 use crate::{
     common::TodoNotesError,
-    entities::Todo,
+    models::Todo,
     queries::{GetTodoByIdInput, GetTodoByIdOutput, Query},
 };
 use async_trait::async_trait;

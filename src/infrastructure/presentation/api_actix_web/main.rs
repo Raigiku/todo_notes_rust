@@ -1,4 +1,4 @@
-use super::endpoints::get_todo_by_id_endpoint;
+use super::endpoints::{get_todo_by_id_endpoint, home};
 use crate::{
     common::TodoNotesError,
     queries::{GetTodoByIdInput, GetTodoByIdOutput, Query},
@@ -18,7 +18,8 @@ pub async fn main<
         App::new()
             .wrap(middleware::Logger::default())
             .data(get_todo_by_id.clone())
-            .service(web::resource("/api/todos/{id}").to(get_todo_by_id_endpoint::<T>))
+            .service(web::resource("/").to(home))
+            .service(web::resource("/todos/{id}").to(get_todo_by_id_endpoint::<T>))
     })
     .bind("127.0.0.1:8080")?
     .run()

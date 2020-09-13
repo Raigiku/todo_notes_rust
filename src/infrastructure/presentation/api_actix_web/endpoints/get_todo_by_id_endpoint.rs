@@ -26,7 +26,7 @@ impl GetTodoByIdResponse {
             id: *output.id(),
             text: output.text().clone(),
             created_at: *output.created_at(),
-            user: format!("127.0.0.1:8080/users/{}", output.user_id()),
+            user: format!("/users/{}", output.user_id()),
         }
     }
 }

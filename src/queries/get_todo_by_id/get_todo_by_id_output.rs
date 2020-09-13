@@ -1,4 +1,4 @@
-use crate::entities::Todo;
+use crate::models::Todo;
 use chrono::{DateTime, Utc};
 use uuid::Uuid;
 
